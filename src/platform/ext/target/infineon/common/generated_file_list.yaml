@@ -1,0 +1,25 @@
+#-------------------------------------------------------------------------------
+# Copyright (c) 2023-2024 Cypress Semiconductor Corporation (an Infineon company)
+# or an affiliate of Cypress Semiconductor Corporation. All rights reserved.
+#
+# SPDX-License-Identifier: BSD-3-Clause
+#
+#-------------------------------------------------------------------------------
+
+# The path of "template" can be relative path to TF-M root or absolute path
+# The path of "output" must be relative path to the root for generated files
+# Both can contain environment variables
+
+{
+  "description": "Infineon generated files list",
+  "type": "generated_file_list",
+  "version_major": 0,
+  "version_minor": 1,
+  "file_list": [
+    {
+        "description": "IFX platform specific partition info",
+        "template": "platform/ext/target/infineon/common/spe/protection/partition_info.template",
+        "output": "secure_fw/ifx/partition_info.c"
+    }
+  ]
+}

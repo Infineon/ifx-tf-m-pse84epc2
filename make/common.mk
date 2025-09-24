@@ -1,0 +1,154 @@
+################################################################################
+# \file common.mk
+# \version 1.0
+#
+# \brief
+# Trusted Firmware-M (TF-M) helper make file
+#
+################################################################################
+# \copyright
+# Copyright (c) 2022-2025 Cypress Semiconductor Corporation (an Infineon company)
+# or an affiliate of Cypress Semiconductor Corporation. All rights reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+################################################################################
+
+ifeq ($(WHICHFILE),true)
+$(info Processing $(lastword $(MAKEFILE_LIST)))
+endif
+
+################################################################################
+# Help macros
+################################################################################
+
+TFM_OS=$(shell uname)
+
+ifneq (,$(findstring CYGWIN,$(TFM_OS)))
+# Converts path to shell (Cygwin) path prefixed with /cygdrive/
+TFM_PATH_SHELL2=$(shell cygpath -i -u "$1")
+TFM_PATH_SHELL=$(call TFM_PATH_SHELL2,"$1")
+# Converts path to cmake (Cygwin mixed) path prefixed with C:/abc/file.txt
+TFM_PATH_MIXED2=$(shell cygpath -i -m "$1")
+TFM_PATH_MIXED=$(call TFM_PATH_MIXED2,"$1")
+# Use python executable on Windows/Cygwin
+TFM_PYTHON_EXECUTABLE_NAME=python
+else
+# Keep path as is for other platforms (OS X, Linux)
+TFM_PATH_SHELL=$1
+TFM_PATH_MIXED=$1
+# Use python3 executable on OS X/Linux
+TFM_PYTHON_EXECUTABLE_NAME=python3
+endif
+
+# Wraps space in target
+space:=$(subst ,, )
+TFM_WRAP_SPACE=$(subst $(space),\ ,$1)
+TFM_UNWRAP_SPACE=$(subst \ ,$(space),$1)
+# Wrape double quote
+double_quote:=$(subst ,,")
+TFM_WRAP_DOUBLE_QUOTE=$(subst $(double_quote),\",$1)
+
+#
+# Setup library for TF-M
+# $(1) - TF-M library CMake configuration variable name
+# $(2) - user provided optional variable name which defines path to library
+# $(3) - MTB library manager variable name which defines path to library
+#
+define TFM_SETUP_MTB_LIBRARY
+ifneq ($($(2)),)
+# Library location provided by user in application Makefile
+TFM_CONFIGURE_OPTIONS+= "-D$(1):STRING=$($(2))"
+else ifneq ($($(3)),)
+# Use library defined by MTB Library Manager
+TFM_CONFIGURE_OPTIONS+= "-D$(1):STRING=$(call TFM_PATH_MIXED,$(abspath $($(3))))"
+else
+# Use library provided by TF-M
+endif
+endef
+
+################################################################################
+# Python
+################################################################################
+
+ifeq ($(TFM_PYTHON_PATH),)
+ifneq ($(CY_PYTHON_PATH),)
+TFM_PYTHON_PATH=$(CY_PYTHON_PATH)
+else
+TFM_PYTHON_PATH=$(shell which $(TFM_PYTHON_EXECUTABLE_NAME) 2>/dev/null)
+endif
+ifeq ($(TFM_PYTHON_PATH),)
+TFM_PYTHON_PATH=$(TFM_PYTHON_EXECUTABLE_NAME)
+endif
+endif
+
+################################################################################
+# Configuration
+################################################################################
+
+# Directory with current makefile
+TFM_MAKE_SRC_DIR:=$(realpath $(join $(dir $(lastword $(MAKEFILE_LIST))),..))
+
+# Temporary directory
+TFM_TMP_DIR?=$(call TFM_PATH_MIXED,$(TFM_MAKE_SRC_DIR)/.tmp)
+TFM_STAGES_DIR:=$(call TFM_PATH_MIXED,$(TFM_TMP_DIR)/stages)
+
+# Location of TF-M sources
+ifneq ($(TFM_GIT_URL),)
+# Download TF-M sources from git repository
+TFM_GIT_REF?=master
+TFM_SRC_DIR?=$(call TFM_PATH_MIXED,$(abspath $(TFM_TMP_DIR)/src))
+TFM_DOWNLOAD_SRC=true
+else ifneq ($(wildcard $(TFM_SRC_DIR)),)
+# Use existing TF-M sources
+TFM_SRC_DIR:=$(call TFM_PATH_MIXED,$(abspath $(TFM_SRC_DIR)))
+TFM_DOWNLOAD_SRC=false
+else
+# Use ifx-tf-m library
+TFM_SRC_DIR:=$(call TFM_PATH_MIXED,$(abspath $(TFM_MAKE_SRC_DIR)/src))
+TFM_DOWNLOAD_SRC=false
+endif
+
+# Location where non-secure interface is installed - application folder by default
+TFM_INSTALL_PATH?=../install
+# Location where hex images are installed
+TFM_BUILD_PROJECT_HEX_DIR=$(call TFM_PATH_MIXED,$(abspath ../build/project_hex))
+
+TFM_CONFIGURE_OPTIONS?= -Wno-dev
+
+# MTB build
+TFM_CONFIGURE_OPTIONS+= -DIFX_MTB_BUILD:BOOL=ON
+
+# Part number provided by BSP
+TFM_CONFIGURE_OPTIONS+= -DIFX_PDL_PART_NUMBER:STRING=$(DEVICE)
+
+# Set core
+TFM_CONFIGURE_OPTIONS+= -DIFX_CORE:STRING=$(TFM_CORE)
+
+# Use BSP provided by project
+TFM_CONFIGURE_OPTIONS+= -DIFX_BSP_LIB_PATH:PATH=$(call TFM_PATH_MIXED,$(abspath $(MTB_TOOLS__TARGET_DIR)))
+TFM_CONFIGURE_OPTIONS+= -DIFX_BOARD_NAME:STRING=TARGET_$(subst -,_,$(TARGET))
+# Use GeneratedSource generated by MTB
+TFM_CONFIGURE_OPTIONS+= -DIFX_BSP_GENERATED_FILES_OUTPUT_PATH:PATH=$(call TFM_PATH_MIXED,$(abspath $(MTB_TOOLS__TARGET_DIR)/config/GeneratedSource))
+
+ifeq ($(DEVICE_MODE),SECURE)
+TFM_DEVICE_CONFIG_DIR?=$(TFM_SRC_DIR)/platform/ext/target/infineon/common/mtb/config/
+else
+TFM_DEVICE_CONFIG_DIR?=$(TFM_INSTALL_PATH)/config/
+endif
+
+# Include device configuration makefiles
+TFM_DEVICE_CONFIG_MK=$(wildcard $(TFM_DEVICE_CONFIG_DIR)/*.mk)
+
+include $(TFM_DEVICE_CONFIG_MK)
