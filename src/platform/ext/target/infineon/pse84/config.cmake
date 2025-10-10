@@ -24,10 +24,9 @@ set(IFX_BSP_S_EXCLUDE                       ".+/cycfg_qspi_memslot\.c" # QSPI co
                                             ".+/s_start_pse84\.c" # TFM uses own startup files as for now
                                             ".+/cycfg_ppc\.c" # cycfg_ppc.c has protection settings, thus is linked to tfm_spm
                                             ".+/cycfg_mpc\.c" # cycfg_mpc.c has functions to apply protection settings, TFM has own functions
-                                            ".+/cycfg_protection\.c" # cycfg_protection.c has protection settings, thus is linked to tfm_spm
-                                            ".+/cycfg_sau\.c" # cycfg_sau.c has protection settings, thus is linked to tfm_spm
                                             ".+/cycfg_system\.c" # cycfg_system.c has protection settings, thus is linked to tfm_spm
                                             ".+/s_system_pse84\.c" # s_system_pse84.c has data that are shared and linked into ${IFX_SHARED_RO_DATA_TARGET} library
+                                            ".+/tfm_config/.+" # tfm_config folder contains files that are added to the build manually (e.g. custom partitions)
                                                         CACHE PATH      "List of sources excluded from build of secure BSP target")
 
 set(IFX_BSP_DEVICE_SUPPORT_LIBS "${IFX_COMMON_SOURCE_DIR}/deploy/mtb-personalities/props.json" CACHE STRING "List of additional device support libraries")

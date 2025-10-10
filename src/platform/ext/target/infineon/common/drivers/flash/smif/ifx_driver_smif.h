@@ -11,7 +11,7 @@
 
 #include <stdint.h>
 #include "ifx_flash_driver_api.h"
-#include <cy_smif_memslot.h>
+#include "cy_smif_memslot.h"
 #include "static_checks.h"
 
 #ifdef __cplusplus

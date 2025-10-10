@@ -7,8 +7,8 @@
  *
  */
 
-#include <cy_device.h>
-#include <cy_scb_uart.h>
+#include "cy_device.h"
+#include "cy_scb_uart.h"
 
 #include "config_tfm.h"
 #if DOMAIN_S

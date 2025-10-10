@@ -16,7 +16,6 @@
 #include "cycfg_protection.h"
 #include "cycfg_qspi_memslot.h"
 #include "cycfg_ppc.h"
-#include "cycfg_sau.h"
 #include "cycfg_system.h"
 #include "partition_edge.h"
 #include "project_memory_layout.h"
@@ -43,7 +42,12 @@ typedef struct {
     cy_en_ms_ctl_sec_resp_t        sec_resp;
 } ifx_msc_agc_resp_config_v1_t;
 
-typedef cy_sau_config_t ifx_sau_config_t;
+typedef cy_stc_sau_config_t ifx_sau_config_t;
+
+
+/* Number of entries in \ref SAU_config. The last element (NSC region) is
+ * excluded because TFM manages NSC configuration by own code. */
+#define CY_SAU_REGION_CNT                   ((sizeof(SAU_config)/sizeof(SAU_config[0])) - 1u)
 
 extern PPC_Type* const                      ifx_ppcx_region_ptrs[];
 extern const size_t                         ifx_ppcx_region_ptrs_count;

@@ -13,12 +13,12 @@ set(IFX_BOARD_NAME                          "TARGET_APP_KIT_PSE84_EVAL_EPC2" CAC
 
 set(IFX_BSP_LIB_PATH                        "DOWNLOAD"            CACHE PATH      "Path to target BSP library (or DOWNLOAD to fetch automatically)")
 set(IFX_BSP_LIB_GIT_REMOTE                  "https://github.com/Infineon/TARGET_KIT_PSE84_EVAL_EPC2.git" CACHE STRING "Target BSP library repo URL")
-set(IFX_BSP_LIB_VERSION                     "release-v1.0.0"      CACHE STRING    "The version of target BSP library to use")
+set(IFX_BSP_LIB_VERSION                     "release-v1.1.0"      CACHE STRING    "The version of target BSP library to use")
 set(IFX_BSP_LIB_PATCH_DIR                   "${IFX_FAMILY_SOURCE_DIR}/libs/ifx_bsp/patch" CACHE STRING "Path to ifx-bsp patches")
 
 set(IFX_DEVICE_DB_LIB_PATH                   "DOWNLOAD"         CACHE PATH      "Path to target Device DB library (or DOWNLOAD to fetch automatically)")
 set(IFX_DEVICE_DB_LIB_GIT_REMOTE             "https://github.com/Infineon/device-db.git" CACHE STRING "Target Device DB library repo URL")
-set(IFX_DEVICE_DB_LIB_VERSION                "release-v4.29.0"      CACHE STRING    "The version of target Device DB library to use")
+set(IFX_DEVICE_DB_LIB_VERSION                "release-v4.31.0"      CACHE STRING    "The version of target Device DB library to use")
 
 # PS_TEST_NV_COUNTERS=ON disables real NV counters, and instead replaces them
 # with mock RAM NV counters implementation. This allows to perform rollback

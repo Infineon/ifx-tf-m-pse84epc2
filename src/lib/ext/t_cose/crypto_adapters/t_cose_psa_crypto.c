@@ -497,6 +497,8 @@ t_cose_crypto_hmac_sign_setup(struct t_cose_crypto_hmac *hmac_ctx,
         if (psa_alg != PSA_ALG_CMAC) {
             return T_COSE_ERR_UNSUPPORTED_SIGNING_ALG;
         }
+#else /* T_COSE_ENABLE_AES_CMAC_128 */
+        return T_COSE_ERR_UNSUPPORTED_SIGNING_ALG;
 #endif /* T_COSE_ENABLE_AES_CMAC_128 */
     }
 
@@ -581,7 +583,13 @@ t_cose_crypto_hmac_verify_setup(struct t_cose_crypto_hmac *hmac_ctx,
     if((psa_alg != PSA_ALG_HMAC(PSA_ALG_SHA_256)) && \
         (psa_alg != PSA_ALG_HMAC(PSA_ALG_SHA_384)) && \
         (psa_alg != PSA_ALG_HMAC(PSA_ALG_SHA_512))) {
+#ifdef T_COSE_ENABLE_AES_CMAC_128
+        if (psa_alg != PSA_ALG_CMAC) {
+            return T_COSE_ERR_UNSUPPORTED_SIGNING_ALG;
+        }
+#else /* T_COSE_ENABLE_AES_CMAC_128 */
         return T_COSE_ERR_UNSUPPORTED_SIGNING_ALG;
+#endif /* T_COSE_ENABLE_AES_CMAC_128 */
     }
 
     hmac_ctx->op_ctx = psa_mac_operation_init();

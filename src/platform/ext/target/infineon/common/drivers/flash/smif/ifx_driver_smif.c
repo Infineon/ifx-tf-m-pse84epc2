@@ -16,7 +16,7 @@
 #include "ifx_driver_smif_private.h"
 
 #include <string.h>
-#include <cy_device.h>
+#include "cy_device.h"
 
 
 #define IFX_DRIVER_SMIF_VERSION             ARM_DRIVER_VERSION_MAJOR_MINOR(1UL, 0U)

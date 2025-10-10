@@ -7,6 +7,9 @@ with the PSA Certified guidelines. Thus, TF-M allows relevant chips and devices 
 
 ## Changelog
 
+### v2.1.400
+* Updated version to include latest releases of dependent assets: ifx-mbedtls, mtb-dsl-pse8xxgp and other platform-specific libraries.
+
 ### v2.1.300
 * Removed support of IFX_PDL_SECURE_SERVICES
 * Added support of IFX_MTB_SRF

@@ -20,4 +20,4 @@ set(IFX_CMSIS_LIB_VERSION                   "release-v6.1.0" CACHE STRING "The v
 
 set(IFX_CORE_LIB_PATH                       "DOWNLOAD"  CACHE PATH      "Path to Infineon Core library (or DOWNLOAD to fetch automatically)")
 set(IFX_CORE_LIB_GIT_REMOTE                 "https://github.com/Infineon/core-lib.git" CACHE STRING "Infineon Core library repo URL")
-set(IFX_CORE_LIB_VERSION                    "release-v1.5.0" CACHE STRING    "The version of Infineon Core library to use")
+set(IFX_CORE_LIB_VERSION                    "release-v1.6.0" CACHE STRING    "The version of Infineon Core library to use")

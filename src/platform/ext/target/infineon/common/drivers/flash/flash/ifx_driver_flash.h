@@ -12,7 +12,7 @@
 #include "ifx_flash_driver_api.h"
 
 #include <stdint.h>
-#include <cy_flash.h>
+#include "cy_flash.h"
 
 #ifdef __cplusplus
 extern "C" {

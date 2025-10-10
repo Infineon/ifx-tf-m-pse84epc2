@@ -13,7 +13,7 @@
 #include <stdint.h>
 #include "psa/lifecycle.h"
 #include "static_checks.h"
-#include <cy_device.h>
+#include "cy_device.h"
 
 /**
  * \brief Enumeration used to define debug access port state

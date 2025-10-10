@@ -8,7 +8,7 @@
 
 #include <stdbool.h>
 #include <string.h>
-#include <cmsis_compiler.h>
+#include "cmsis_compiler.h"
 
 #include "config_tfm.h"
 #include "provisioning.h"

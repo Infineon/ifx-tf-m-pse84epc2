@@ -31,6 +31,9 @@ if(NS_BUILD AND IFX_MTB_SRF)
 
     target_sources(ifx_mtb_hal
         PRIVATE
+            ${IFX_DEV_SUPPORT_LIB_PATH}/hal/source/mtb_hal_lptimer_common.c
+            ${IFX_DEV_SUPPORT_LIB_PATH}/hal/source/mtb_hal_lptimer.c
+            ${IFX_DEV_SUPPORT_LIB_PATH}/hal/source/mtb_hal_syspm.c
             ${IFX_DEV_SUPPORT_LIB_PATH}/hal/source/mtb_hal_system.c
     )
 

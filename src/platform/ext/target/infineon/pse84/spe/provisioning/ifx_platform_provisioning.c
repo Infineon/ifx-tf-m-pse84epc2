@@ -8,7 +8,7 @@
 
 #include "cmsis.h"
 #include "provisioning.h"
-#include <cy_device.h>
+#include "cy_device.h"
 
 /* Debug port access control bitfields as specified by BootROM */
 #define IFX_DEBUG_POLICY_CM33_AP_CTL_Pos            (0UL)

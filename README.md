@@ -63,7 +63,7 @@ Manual configuration and assignment of memory regions and peripherals to protect
   EPC assigns these peripherals to the appropriate protection domain by default (for example, M33S for SPM).
   For manual configuration or reassignment, use the System tab in the Device Configurator.
 
-#### ModusToolbox™ Makefile Options
+### ModusToolbox™ Makefile Options
 
 Configure your build using the following variables in your Makefile:
 
@@ -89,7 +89,7 @@ Configure your build using the following variables in your Makefile:
 - `TFM_INSTALL_PATH`: Optional install path for the non-secure interface.
 - `TFM_CONFIGURE_EXT_OPTIONS`: Additional CMake options.
 
-##### Example Makefile Fragment
+#### Example Makefile Fragment
 
 ```makefile
 TFM_GIT_URL=https://github.com/your-org/trusted-firmware-m.git
@@ -97,6 +97,51 @@ TFM_GIT_REF=main
 TFM_BUILD_DIR=./build
 TFM_DEBUG_SYMBOLS=ON
 ```
+
+### Using Additional Libraries in the TF‑M Secure Image
+
+When adding a custom partition, you may need to use additional libraries in the
+TF-M secure image.
+
+To do so:
+1. Add the library to the secure project via the Library Manager
+    (e.g. the `ethernet-phy-driver` library).
+2. At the end (last line) of the secure project Makefile, specify the path to
+   the library folder, e.g.:
+   ```makefile
+   $(eval $(call TFM_SETUP_MTB_LIBRARY,IFX_MTB_ETHERNET_PHY_DRIVER_LIB_PATH,IFX_MTB_ETHERNET_PHY_DRIVER_LIB_PATH,SEARCH_ethernet-phy-driver))
+   ```
+3. Add the library files to the build. This can be done by either manually
+   specifying the required files and include directories (refer to the standard
+   CMake build system commands), or by using the helper `ifx_mtb_autodiscovery`
+   function (refer to `platform/ext/target/infineon/common/cmake/mtb.cmake` for
+   the function documentation), e.g. in the partition CMake file add:
+   ```cmake
+   add_library(ifx_ethernet_phy_driver STATIC EXCLUDE_FROM_ALL)
+
+   target_compile_options(ifx_ethernet_phy_driver
+       PRIVATE
+           ${COMPILER_CMSE_FLAG}
+   )
+
+   include(${IFX_COMMON_SOURCE_DIR}/cmake/mtb.cmake)
+
+   ifx_mtb_autodiscovery(
+       PATH ${IFX_MTB_ETHERNET_PHY_DRIVER_LIB_PATH}
+       TARGET ifx_ethernet_phy_driver
+       COMPONENTS ""
+   )
+
+   target_link_libraries(ifx_ethernet_phy_driver
+       PRIVATE
+           ifx_pdl_inc_s
+   )
+
+   target_link_libraries(tfm_app_rot_partition_custom_partition
+       PRIVATE
+           ifx_ethernet_phy_driver
+   )
+   ```
 
 ### SPM Logging
 

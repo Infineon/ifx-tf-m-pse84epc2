@@ -9,7 +9,7 @@
 #ifndef TFM_PERIPHERALS_DEF_H
 #define TFM_PERIPHERALS_DEF_H
 
-#include <cycfg.h>
+#include "cycfg.h"
 
 /* ifx_peripherals_def.h should be provided by BSP to define peripheral
  * configuration for SPE and NSPE */

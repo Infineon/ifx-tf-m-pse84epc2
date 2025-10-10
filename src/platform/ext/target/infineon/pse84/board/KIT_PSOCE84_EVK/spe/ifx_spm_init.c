@@ -13,12 +13,12 @@
 #include "tfm_spm_log.h"
 #include "utilities.h"
 
-#include <cybsp.h>
-#include <cycfg.h>
-#include <cy_device.h>
-#include <cy_gpio.h>
-#include <cy_scb_uart.h>
-#include <cy_sysclk.h>
+#include "cybsp.h"
+#include "cycfg.h"
+#include "cy_device.h"
+#include "cy_gpio.h"
+#include "cy_scb_uart.h"
+#include "cy_sysclk.h"
 
 void ifx_init_spm_peripherals(void)
 {

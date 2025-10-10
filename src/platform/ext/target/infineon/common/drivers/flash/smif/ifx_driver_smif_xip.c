@@ -9,7 +9,7 @@
 #include "ifx_driver_smif.h"
 #include "ifx_driver_smif_private.h"
 #include <string.h>
-#include <cy_device.h>
+#include "cy_device.h"
 
 static int32_t ifx_driver_smif_read_data(ifx_flash_driver_handler_t handler,
             uint32_t addr, void *data, uint32_t cnt)

@@ -12,7 +12,7 @@
 #include "ifx_driver_rram.h"
 #include "partition/flash_layout.h"
 
-#include <cy_device.h>
+#include "cy_device.h"
 
 /* RRAM driver object for Internal Trusted Storage */
 static const ifx_driver_rram_obj_t ifx_rram_obj_its = {

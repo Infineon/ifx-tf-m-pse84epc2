@@ -11,8 +11,8 @@
 #include "mxs22.h"
 #include "provisioning.h"
 #include "tfm_plat_provisioning.h"
-#include <cy_device.h>
-#include <cy_syslib.h>
+#include "cy_device.h"
+#include "cy_syslib.h"
 #include "static_checks.h"
 
 enum tfm_plat_err_t tfm_plat_provisioning_perform(void)

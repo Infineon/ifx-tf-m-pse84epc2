@@ -11,7 +11,7 @@
 
 #include "cy_device.h"
 #include "cy_tcpwm_counter.h"
-#include <cycfg_pins.h>
+#include "cycfg_pins.h"
 #include "mxs22.h"
 
 #ifdef __cplusplus

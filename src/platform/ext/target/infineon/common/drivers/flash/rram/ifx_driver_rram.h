@@ -13,7 +13,7 @@
 #include "ifx_s_peripherals_def.h"
 
 #include <stdint.h>
-#include <cy_rram.h>
+#include "cy_rram.h"
 
 #ifdef __cplusplus
 extern "C" {

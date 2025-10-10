@@ -44,8 +44,6 @@ target_sources(platform_s
 target_sources(tfm_spm
     PRIVATE
         protection_regions_cfg.c
-        ${IFX_BSP_GENERATED_FILES_OUTPUT_PATH}/cycfg_protection.c
-        ${IFX_BSP_GENERATED_FILES_OUTPUT_PATH}/cycfg_sau.c
         ${IFX_BSP_GENERATED_FILES_OUTPUT_PATH}/cycfg_system.c
 )
 
@@ -57,6 +55,7 @@ target_compile_definitions(tfm_spm
         # configuration.
         NSC_START_ADDRESS=0
         NSC_END_ADDRESS=0
+        NSC_SIZE=0
 )
 
 target_sources(tfm_s

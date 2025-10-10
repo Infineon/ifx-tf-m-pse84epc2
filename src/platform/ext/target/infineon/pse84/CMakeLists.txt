@@ -16,6 +16,11 @@ cmake_policy(SET CMP0118 NEW)
 set(IFX_SHARED_RO_DATA_TARGET "ifx_tfm_sp_meta")
 add_library(${IFX_SHARED_RO_DATA_TARGET} STATIC)
 
+target_compile_options(${IFX_SHARED_RO_DATA_TARGET}
+    PRIVATE
+        ${COMPILER_CMSE_FLAG}
+)
+
 add_subdirectory_ext(${IFX_COMMON_SOURCE_DIR}/libs libs)
 
 add_subdirectory_ext(${IFX_COMMON_SOURCE_DIR}/board board)

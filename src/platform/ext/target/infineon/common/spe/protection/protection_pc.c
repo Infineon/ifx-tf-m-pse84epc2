@@ -8,7 +8,7 @@
 
 #include "config_tfm.h"
 #include "compiler_ext_defs.h"
-#include <cy_ms_ctl.h>
+#include "cy_ms_ctl.h"
 #include "utilities.h"
 #include "fih.h"
 #include "memory_symbols.h"

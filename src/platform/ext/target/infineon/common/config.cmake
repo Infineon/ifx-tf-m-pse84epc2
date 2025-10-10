@@ -92,7 +92,7 @@ set(PLATFORM_EXCEPTION_INFO                 ${IFX_FAULTS_INFO_DUMP} CACHE BOOL  
 
 ################################# Dependencies #################################
 
-set(MBEDCRYPTO_VERSION                      "release-v3.6.300" CACHE STRING  "The version of Mbed Crypto to use")
+set(MBEDCRYPTO_VERSION                      "release-v3.6.400" CACHE STRING  "The version of Mbed Crypto to use")
 set(MBEDCRYPTO_GIT_REMOTE                   "https://github.com/Infineon/ifx-mbedtls.git" CACHE STRING "The URL (or path) to retrieve MbedTLS from.")
 set(MBEDCRYPTO_PATCH_DIR                    "${IFX_COMMON_SOURCE_DIR}/libs/mbedcrypto/patch" CACHE STRING "Path to mbedtls patches")
 set(MBEDCRYPTO_FORCE_PATCH                  ON          CACHE BOOL      "Always apply MBed Crypto patches")
