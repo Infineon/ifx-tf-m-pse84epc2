@@ -366,17 +366,23 @@ endif
 	mkdir -p $(MTB_TOOLS__OUTPUT_CONFIG_DIR) && \
 	install $(TFM_BUILD_DIR)/bin/tfm_s.elf $(MTB_TOOLS__OUTPUT_CONFIG_DIR)/$(APPNAME).elf && \
 	install $(TFM_BUILD_DIR)/bin/tfm_s.hex $(MTB_TOOLS__OUTPUT_CONFIG_DIR)/$(APPNAME).hex && \
+	install $(TFM_BUILD_DIR)/bin/tfm_s.bin $(MTB_TOOLS__OUTPUT_CONFIG_DIR)/$(APPNAME).bin && \
 	mkdir -p $(MTB_TOOLS__OUTPUT_BASE_DIR)/last_config && \
 	install $(TFM_BUILD_DIR)/bin/tfm_s.elf $(MTB_TOOLS__OUTPUT_BASE_DIR)/last_config/$(APPNAME).elf && \
 	install $(TFM_BUILD_DIR)/bin/tfm_s.hex $(MTB_TOOLS__OUTPUT_BASE_DIR)/last_config/$(APPNAME).hex && \
+	install $(TFM_BUILD_DIR)/bin/tfm_s.bin $(MTB_TOOLS__OUTPUT_BASE_DIR)/last_config/$(APPNAME).bin && \
 	echo -e "$(TFM_BUILD_DIR)/bin/tfm_s.hex\n" >$(MTB_TOOLS__OUTPUT_BASE_DIR)/last_config/$(APPNAME).hex.d && \
+	echo -e "$(TFM_BUILD_DIR)/bin/tfm_s.bin\n" >$(MTB_TOOLS__OUTPUT_BASE_DIR)/last_config/$(APPNAME).bin.d && \
 	touch "$(TFM_BUILD_DIR)/.tfm-make"
 
 .PHONY: tfm-project-hex
 tfm-project-hex: tfm-make
 	mkdir -p $(TFM_BUILD_PROJECT_HEX_DIR) && \
+	install $(MTB_TOOLS__OUTPUT_CONFIG_DIR)/$(APPNAME).elf $(TFM_BUILD_PROJECT_HEX_DIR)/$(APPNAME).elf && \
 	install $(MTB_TOOLS__OUTPUT_CONFIG_DIR)/$(APPNAME).hex $(TFM_BUILD_PROJECT_HEX_DIR)/$(APPNAME).hex && \
-	echo $(call TFM_PATH_MIXED,$(TFM_BUILD_DIR)/bin/tfm_s.hex) >$(TFM_BUILD_PROJECT_HEX_DIR)/$(APPNAME).hex.d;
+	install $(MTB_TOOLS__OUTPUT_CONFIG_DIR)/$(APPNAME).bin $(TFM_BUILD_PROJECT_HEX_DIR)/$(APPNAME).bin && \
+	echo $(call TFM_PATH_MIXED,$(TFM_BUILD_DIR)/bin/tfm_s.hex) >$(TFM_BUILD_PROJECT_HEX_DIR)/$(APPNAME).hex.d && \
+	echo $(call TFM_PATH_MIXED,$(TFM_BUILD_DIR)/bin/tfm_s.bin) >$(TFM_BUILD_PROJECT_HEX_DIR)/$(APPNAME).bin.d;
 
 .PHONY: tfm-build
 tfm-build: tfm-make tfm-project-hex

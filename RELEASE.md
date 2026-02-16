@@ -7,6 +7,9 @@ with the PSA Certified guidelines. Thus, TF-M allows relevant chips and devices 
 
 ## Changelog
 
+### v2.1.500
+* Updated version to support memory reporting in ModusToolbox (MTB) 3.7.
+
 ### v2.1.400
 * Updated version to include latest releases of dependent assets: ifx-mbedtls, mtb-dsl-pse8xxgp and other platform-specific libraries.
 
